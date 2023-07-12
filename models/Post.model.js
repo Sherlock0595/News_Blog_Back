@@ -10,6 +10,10 @@ const postSchema = mongoose.Schema({
         required: true,
         unique: true,
     },
+    imageUrl: {
+        type: String,
+        default: ''
+    },
 
     tags: {
         type: Array,

@@ -1,5 +1,20 @@
 import PostModel from '../models/Post.model.js'
 
+export const getLastTags = async (req, res) => {
+    try {
+        const posts = await PostModel.find().limit(5).exec();
+
+        const tags = posts.map(obj => obj.tags).flat().slice(0, 5)
+
+        res.json(tags)
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: 'Не удалось найти статьи'
+        })
+    }
+}
+
 export const getAll = async (req, res) => {
     try {
         const posts = await PostModel.find().populate('user').exec();
@@ -20,7 +35,7 @@ export const getOne = async (req, res) => {
             { _id: postId },
             { $inc: { viewsCount: 1 } },
             { new: true }
-        );
+        ).populate('user');
 
         if (!doc) {
             return res.status(404).json({
@@ -66,7 +81,7 @@ export const create = async (req, res) => {
             title: req.body.title,
             text: req.body.text,
             imageUrl: req.body.imageUrl,
-            tags: req.body.tags,
+            tags: req.body.tags.split(','),
             user: req.userId,
         });
         const post = await doc.save()
@@ -91,10 +106,10 @@ export const update = async (req, res) => {
                 tags: req.body.tags,
                 user: req.userId,
             },
-             
-            );
 
-        
+        );
+
+
 
         res.json({
             success: true
