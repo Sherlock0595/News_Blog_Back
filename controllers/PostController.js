@@ -98,7 +98,7 @@ export const update = async (req, res) => {
     try {
         const postId = req.params.id;
 
-        await PostModel.updateOne({ _id: postId },
+        await PostModel.findOneAndUpdate({ _id: postId },
             {
                 title: req.body.title,
                 text: req.body.text,
