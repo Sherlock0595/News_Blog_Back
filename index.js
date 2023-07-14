@@ -4,9 +4,10 @@ import multer from 'multer';
 import cors from 'cors';
 import 'dotenv/config';
 import { checkAuth } from './utils/index.js';
-import { UserController, PostController } from './controllers/index.js';
+import { UserController, PostController, CommentController } from './controllers/index.js';
 import authRoutes from './routes/auth.Routes.js';
 import postRoutes from './routes/post.routes.js';
+import commentRoutes from './routes/comment.routes.js'
 
 const app = express();
 app.use(cors());
@@ -24,15 +25,18 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-app.get('/tags', PostController.getLastTags)
 app.use('/auth', authRoutes);
+
 app.use('/posts', postRoutes);
 app.use('/posts/tags', postRoutes)
+
 app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
   res.json({
     url: `/uploads/${req.file.originalname}`,
   });
 });
+
+app.use('/', commentRoutes)
 
 const PORT = process.env.PORT;
 

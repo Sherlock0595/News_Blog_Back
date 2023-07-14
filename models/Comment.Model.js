@@ -11,10 +11,7 @@ const commentSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Post'
     },
-    viewsCount: {
-        type: Number,
-        default: 0,
-    },
+
 });
 
 export default mongoose.model("Comment", commentSchema);

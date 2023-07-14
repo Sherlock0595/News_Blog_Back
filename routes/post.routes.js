@@ -7,7 +7,6 @@ const router = express.Router();
 
 router.get('/tags', PostController.getLastTags);
 router.get('/', PostController.getAll);
-router.get('/posts/tags', PostController.getLastTags);
 router.get('/:id', PostController.getOne);
 router.post('/', checkAuth, postCreateValidation, handleValidationErrors, PostController.create);
 router.delete('/:id', checkAuth, PostController.remove);

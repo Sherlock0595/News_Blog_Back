@@ -26,7 +26,7 @@ export const getAll = async (req, res) => {
         })
     }
 };
-
+// добавить
 export const getOne = async (req, res) => {
     try {
         const postId = req.params.id;
